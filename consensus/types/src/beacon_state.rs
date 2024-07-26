@@ -2469,6 +2469,14 @@ impl<E: EthSpec> BeaconState<E> {
                     .checked_sub(self.num_fields_pow2())
                     .ok_or(Error::IndexNotSupported(generalized_index))?
             }
+            light_client_update::HISTORICAL_ROOTS_INDEX => {
+                let historical_roots_generalized_index = generalized_index / 2;
+
+                // Subtract 32. Result should be 7.
+                historical_roots_generalized_index
+                    .checked_sub(self.num_fields_pow2())
+                    .ok_or(Error::IndexNotSupported(generalized_index))?
+            }
             _ => return Err(Error::IndexNotSupported(generalized_index)),
         };
 
