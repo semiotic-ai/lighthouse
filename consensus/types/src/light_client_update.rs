@@ -21,6 +21,7 @@ use tree_hash_derive::TreeHash;
 pub const FINALIZED_ROOT_INDEX: usize = 105;
 pub const CURRENT_SYNC_COMMITTEE_INDEX: usize = 54;
 pub const NEXT_SYNC_COMMITTEE_INDEX: usize = 55;
+pub const ETH1_DATA_INDEX: usize = 17;
 pub const EXECUTION_PAYLOAD_INDEX: usize = 25;
 pub const HISTORICAL_ROOTS_INDEX: usize = 78;
 pub const HISTORICAL_SUMMARIES_INDEX: usize = 118;
