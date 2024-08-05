@@ -759,6 +759,15 @@ impl<E: EthSpec> BeaconBlockBody<E> {
                     .checked_sub(NUM_BEACON_BLOCK_BODY_HASH_TREE_ROOT_LEAVES)
                     .ok_or(Error::IndexNotSupported(generalized_index))?
             }
+            light_client_update::ETH1_DATA_INDEX => {
+                // Eth1Data is a top-level field, subtract off the generalized indices
+                // for the internal nodes. Result should be 1, the field offset of the execution
+                // payload in the `BeaconBlockBody`:
+                // https://github.com/ethereum/consensus-specs/blob/dev/specs/deneb/beacon-chain.md#beaconblockbody
+                generalized_index
+                    .checked_sub(NUM_BEACON_BLOCK_BODY_HASH_TREE_ROOT_LEAVES)
+                    .ok_or(Error::IndexNotSupported(generalized_index))?
+            }
             _ => return Err(Error::IndexNotSupported(generalized_index)),
         };
 
