@@ -371,14 +371,19 @@ pub fn verify_merkle_proof(
 /// Compute a root hash from a leaf and a Merkle proof.
 pub fn merkle_root_from_branch(leaf: H256, branch: &[H256], depth: usize, index: usize) -> H256 {
     assert_eq!(branch.len(), depth, "proof length should equal depth");
-
+    println!("index: {index}");
     let mut merkle_root = leaf.as_bytes().to_vec();
 
     for (i, leaf) in branch.iter().enumerate().take(depth) {
+        println!("i: {i}");
         let ith_bit = (index >> i) & 0x01;
         if ith_bit == 1 {
+            println!("right child");
+            // Current node is a right child; hash the branch node first
             merkle_root = hash32_concat(leaf.as_bytes(), &merkle_root)[..].to_vec();
         } else {
+            println!("left child");
+            // Current node is a left child; hash the merkle_root first
             let mut input = merkle_root;
             input.extend_from_slice(leaf.as_bytes());
             merkle_root = hash(&input);
